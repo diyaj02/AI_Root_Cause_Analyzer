@@ -43,18 +43,20 @@ The system combines rule-based expert logic with a machine learning assistant an
 
 ## Project Structure
 
+```
 AI-Incident-Root-Cause-Analyzer/
 │
 ├── backend/
-│ ├── analyzer.py # Core AI logic and ML assistant
-│ ├── app.py # Flask backend API
+│   ├── analyzer.py        # Core AI logic and ML assistant
+│   └── app.py             # Flask backend API
 │
 ├── frontend/
-│ ├── index.html # Interactive UI
-│ ├── style.css # Dashboard styling
+│   ├── index.html         # Interactive UI
+│   └── style.css          # Dashboard styling
 │
 ├── README.md
 └── .gitignore
+```
 
 
 ---
@@ -137,6 +139,7 @@ Analyzes an incident.
   "error": "TimeoutException",
   "recent_deployment": true
 }
+```
 
 #### Example Response
 
@@ -152,29 +155,22 @@ Analyzes an incident.
 
 
 
-#Running the Project
+### Running the Project
 
 #Install Dependencies
 pip install flask flask-cors numpy scikit-learn
 
 
-### Start Backend
+## Start Backend
 cd backend
 python app.py
 
-
-
-
 The server runs at:
-
 http://127.0.0.1:5000
 
-### Launch Frontend
-
+## Launch Frontend
 Open:
-
 frontend/index.html
-
 using Live Server or directly in a browser.
 
 ---
