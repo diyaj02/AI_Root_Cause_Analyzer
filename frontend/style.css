@@ -1,0 +1,95 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:"Segoe UI",Arial,sans-serif;
+background:#f4f8fc;
+overflow-x:hidden;
+}
+
+/* BACKGROUND CANVAS */
+#particles,
+#bg-network{
+position:fixed;
+inset:0;
+width:100vw;
+height:100vh;
+z-index:-1;
+pointer-events:none;
+}
+
+/* WRAPPER */
+.wrapper{
+max-width:720px;
+width:90%;
+margin:60px auto;
+display:flex;
+flex-direction:column;
+gap:30px;
+position:relative;
+z-index:2;
+}
+
+/* CARD */
+.card{
+background:white;
+padding:30px;
+border-radius:18px;
+border:1px solid rgba(0,0,0,0.06);
+box-shadow:0 12px 32px rgba(0,0,0,0.08);
+transition:0.25s ease;
+}
+
+.card:hover{
+transform:translateY(-3px);
+}
+
+h2{color:#2a3b4c;margin-bottom:10px;}
+h3{color:#3b4f63;margin-top:15px;}
+
+.input-group{margin-bottom:18px;}
+
+input{
+width:100%;
+padding:12px;
+margin-top:6px;
+border-radius:10px;
+border:1px solid #ccd6e0;
+background:#f9fbfd;
+}
+
+button{
+background:#4a90e2;
+color:white;
+padding:14px;
+border:none;
+border-radius:10px;
+width:100%;
+font-size:15px;
+cursor:pointer;
+transition:0.2s ease;
+}
+
+button:hover{
+background:#357bd8;
+}
+
+.confidence-box{
+padding:12px;
+border-radius:8px;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.conf-high{background:#d4edda;}
+.conf-medium{background:#fff3cd;}
+.conf-low{background:#f8d7da;}
+
+.ml-box{
+background:#eef3f9;
+padding:12px;
+border-radius:8px;
+}

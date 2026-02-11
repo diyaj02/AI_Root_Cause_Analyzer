@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI DevOps Incident Assistant</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Background Canvases -->
+<canvas id="bg-network"></canvas>
+<canvas id="particles"></canvas>
+
+<div class="wrapper">
+
+<div class="card">
+<h2>🚨 Incident Input</h2>
+
+<div class="input-group">
+<label>CPU Usage (%)</label>
+<input id="cpu" type="number" value="30">
+</div>
+
+<div class="input-group">
+<label>Memory Usage (%)</label>
+<input id="memory" type="number" value="15">
+</div>
+
+<div class="input-group">
+<label>Error Type</label>
+<input id="error" type="text" value="TimeoutException">
+</div>
+
+<div class="input-group checkbox">
+<label><input id="deployment" type="checkbox"> Recent Deployment</label>
+</div>
+
+<button onclick="analyzeIncident()">Analyze Incident</button>
+</div>
+
+<div class="card">
+<h2>🧠 Analysis Result</h2>
+
+<div id="confidence" class="confidence-box"></div>
+
+<h3>Detected Root Causes</h3>
+<ul id="causes"></ul>
+
+<h3>AI Explanation</h3>
+<p id="explanation"></p>
+
+<h3>ML Suggested Root Cause</h3>
+<div id="ml_prediction" class="ml-box"></div>
+<p id="ml_explanation"></p>
+
+<h3>Recommended Actions</h3>
+<ul id="actions"></ul>
+
+</div>
+</div>
+
+<script>
+async function analyzeIncident(){
+
+const data={
+cpu:document.getElementById("cpu").value,
+memory:document.getElementById("memory").value,
+error:document.getElementById("error").value,
+recent_deployment:document.getElementById("deployment").checked
+};
+
+const response=await fetch("http://127.0.0.1:5000/analyze",{
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body:JSON.stringify(data)
+});
+
+const result=await response.json();
+
+const conf=document.getElementById("confidence");
+conf.innerText="Confidence: "+result.confidence;
+conf.className="confidence-box";
+
+if(result.confidence==="High") conf.classList.add("conf-high");
+else if(result.confidence==="Medium") conf.classList.add("conf-medium");
+else conf.classList.add("conf-low");
+
+const causesList=document.getElementById("causes");
+causesList.innerHTML="";
+result.root_causes.forEach(c=>{
+const li=document.createElement("li");
+li.textContent=c;
+causesList.appendChild(li);
+});
+
+document.getElementById("explanation").innerText=result.explanation;
+document.getElementById("ml_prediction").innerText=result.ml_prediction;
+document.getElementById("ml_explanation").innerText=result.ml_explanation;
+
+const actionsList=document.getElementById("actions");
+actionsList.innerHTML="";
+result.recommended_actions.forEach(a=>{
+const li=document.createElement("li");
+li.textContent=a;
+actionsList.appendChild(li);
+});
+}
+</script>
+
+<!-- ===== BACKGROUND ENGINE ===== -->
+<script>
+const pCanvas=document.getElementById("particles");
+const netCanvas=document.getElementById("bg-network");
+const pctx=pCanvas.getContext("2d");
+const nctx=netCanvas.getContext("2d");
+
+function resizeAll(){
+pCanvas.width=window.innerWidth;
+pCanvas.height=window.innerHeight;
+netCanvas.width=window.innerWidth;
+netCanvas.height=window.innerHeight;
+}
+resizeAll();
+window.addEventListener("resize",resizeAll);
+
+/* PARTICLES */
+let particles=[];
+for(let i=0;i<90;i++){
+particles.push({
+x:Math.random()*pCanvas.width,
+y:Math.random()*pCanvas.height,
+dx:(Math.random()-0.5)*0.6,
+dy:(Math.random()-0.5)*0.6
+});
+}
+
+function animateParticles(){
+pctx.clearRect(0,0,pCanvas.width,pCanvas.height);
+particles.forEach(p=>{
+p.x+=p.dx;
+p.y+=p.dy;
+if(p.x<0||p.x>pCanvas.width) p.dx*=-1;
+if(p.y<0||p.y>pCanvas.height) p.dy*=-1;
+pctx.beginPath();
+pctx.arc(p.x,p.y,2,0,Math.PI*2);
+pctx.fillStyle="rgba(255,105,180,0.6)";
+pctx.fill();
+});
+requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* NETWORK */
+let nodes=[];
+for(let i=0;i<70;i++){
+nodes.push({
+x:Math.random()*netCanvas.width,
+y:Math.random()*netCanvas.height,
+dx:(Math.random()-0.5)*0.4,
+dy:(Math.random()-0.5)*0.4
+});
+}
+
+function drawNetwork(){
+nctx.clearRect(0,0,netCanvas.width,netCanvas.height);
+
+nodes.forEach(n=>{
+n.x+=n.dx;
+n.y+=n.dy;
+if(n.x<0||n.x>netCanvas.width) n.dx*=-1;
+if(n.y<0||n.y>netCanvas.height) n.dy*=-1;
+nctx.beginPath();
+nctx.arc(n.x,n.y,2,0,Math.PI*2);
+nctx.fillStyle="rgba(255,105,180,0.7)";
+nctx.fill();
+});
+
+for(let i=0;i<nodes.length;i++){
+for(let j=i+1;j<nodes.length;j++){
+let dx=nodes[i].x-nodes[j].x;
+let dy=nodes[i].y-nodes[j].y;
+let dist=Math.sqrt(dx*dx+dy*dy);
+
+if(dist<120){
+nctx.beginPath();
+nctx.moveTo(nodes[i].x,nodes[i].y);
+nctx.lineTo(nodes[j].x,nodes[j].y);
+nctx.strokeStyle="rgba(255,105,180,0.15)";
+nctx.stroke();
+}
+}
+}
+
+requestAnimationFrame(drawNetwork);
+}
+drawNetwork();
+</script>
+
+</body>
+</html>
+
