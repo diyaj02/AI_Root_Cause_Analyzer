@@ -138,7 +138,9 @@ Analyzes an incident.
   "recent_deployment": true
 }
 
-Example Response 
+#### Example Response
+
+```json
 {
   "confidence": "High",
   "root_causes": ["Bad deployment causing CPU spike"],
@@ -146,25 +148,36 @@ Example Response
   "ml_prediction": "Bad Deployment",
   "recommended_actions": ["Rollback recent deployment"]
 }
+```
 
 
-Running the Project
 
-Install Dependencies
+#Running the Project
+
+#Install Dependencies
 pip install flask flask-cors numpy scikit-learn
 
-Start Backend
+
+### Start Backend
 cd backend
 python app.py
 
+
+
+
 The server runs at:
+
 http://127.0.0.1:5000
 
-Launch Frontend
+### Launch Frontend
 
 Open:
+
 frontend/index.html
+
 using Live Server or directly in a browser.
+
+---
 
 ## Use Cases
 
@@ -178,11 +191,11 @@ using Live Server or directly in a browser.
 
 ## Future Improvements
 
-- Integration with cloud monitoring platforms (Azure Monitor, AWS CloudWatch, etc.)
+- Integration with cloud monitoring platforms
 - Real-time log ingestion and telemetry processing
 - Interactive data visualization dashboards
-- Advanced anomaly detection using deep learning models
-- User authentication and role-based access control
+- Advanced anomaly detection models
+- Authentication and role-based access control
 
 License
 
