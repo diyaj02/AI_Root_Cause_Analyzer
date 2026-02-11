@@ -192,5 +192,6 @@ using Live Server or directly in a browser.
 
 ---
 
-License
+### License
+
 This project is intended for educational and demonstration purposes. 
