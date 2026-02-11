@@ -99,11 +99,8 @@ Each rule contributes to a weighted confidence score.
 ---
 
 ### Machine Learning Assistant
-
 A Logistic Regression model analyzes incident features:
-
 [CPU, Memory, Error Flag, Deployment Flag]
-
 
 and predicts likely failure categories such as:
 
@@ -153,9 +150,9 @@ Analyzes an incident.
 }
 ```
 
+---
 
-
-### Running the Project
+## Running the Project
 
 #Install Dependencies
 pip install flask flask-cors numpy scikit-learn
@@ -193,6 +190,7 @@ using Live Server or directly in a browser.
 - Advanced anomaly detection models
 - Authentication and role-based access control
 
-License
+---
 
+License
 This project is intended for educational and demonstration purposes. 
